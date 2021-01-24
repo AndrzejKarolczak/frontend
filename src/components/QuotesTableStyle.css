@@ -1,0 +1,32 @@
+table {
+    margin: auto;
+    table-layout:fixed;
+}
+
+thead td {
+    border: 1px solid black; font-weight: bolder;
+    color: blue;
+    padding: 10px;
+    word-spacing: 1px;
+    background-color: lightpink;
+    word-wrap: break-word;
+}
+
+tbody td {
+    border: 1px solid black;
+    text-align: right;
+    background-color:lightblue;
+}
+
+caption {
+    font-size: larger;
+    font-weight: bold;
+}
+input, label {
+    display:block;
+}
+
+.buttonTd {
+    background-color: lightgreen;
+    border: 0;
+}
