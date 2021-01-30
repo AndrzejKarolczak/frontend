@@ -1,8 +1,6 @@
 import React from 'react';
-import QuoteRow from "./QuoteRow";
 import './QuotesTableStyle.css';
-import {Button} from "react-bootstrap";
-import NewQuoteRow from "./NewQuoteRow";
+import QuoteRow from "./QuoteRow";
 
 class QuotesTable extends React.Component {
     constructor(props) {
@@ -56,12 +54,20 @@ class QuotesTable extends React.Component {
     }
 
     handleRowClick(e) {
-
-
-        alert(`Yess! Name ${e.target.name} - value ${e.target.value}`);
         e.preventDefault();
-        document.getElementById("quote-date").value = e.target.quoteDate;
-        document.getElementById("quote-value").value = e.target.quoteValue;
+        if (e.target.value === "Zaznacz") {
+            let found = this.state.series.find(r => r.quoteDate === e.target.name);
+            document.getElementById("quote-date").value = found.quoteDate;
+            document.getElementById("quote-value").value = found.quoteValue;
+        } else {
+            if (window.confirm('Czy na pewno chcesz usunąć ten rekord?')) {
+                let newArray = this.state.series.map(r => r);
+                let index = newArray.findIndex(r => r.quoteDate === e.target.name);
+                this.delete(e.target.name);
+                newArray.splice(index, 1);
+                this.setState({series: newArray});
+            }
+        }
     }
 
     persistNew(newRow) {
@@ -88,38 +94,55 @@ class QuotesTable extends React.Component {
             .then(json => alert(`${json.message} (status: ${json.status})`));
     }
 
+    delete(quoteDate) {
+        fetch(`http://localhost:3001/quotes/${quoteDate.toString()}`, {
+            method: 'DELETE'
+        })
+            .then(response => alert(`Usunięto (status: ${response.status})`));
+    }
+
     render() {
         return (
-            <div>
-                <fieldset>
-                    <div>
-                        <label htmlFor="quote-date">Data kwotowania</label>
-                        <input type="date" id="quote-date" name="quote-date"/>
+            <div className="container col-md-auto">
+                <div className="container col-2 leftFloater mt-3">
+                    <div className="card ">
+                        <div className="card-body cardBackground">
+                            <fieldset>
+                                <h5 className="card-title mb-3">Dodaj/zmień dane</h5>
+                                <div className="col-md-3 mb-3">
+                                    <label htmlFor="quote-date">Data kwotowania</label>
+                                    <input type="date" id="quote-date" required name="quote-date"/>
+                                </div>
+                                <div className="col-md-4 mb-3">
+                                    <label htmlFor="quote-value">Wartość kwotowania</label>
+                                    <input type="number" step="0.0001" min="0.0001" required id="quote-value"
+                                           name="quote-value"/>
+                                </div>
+                                <input type="button" value="Zapisz" onClick={this.handleButtonClick}
+                                       className="btn btn-primary mt-2"/>
+                            </fieldset>
+                        </div>
                     </div>
-                    <div>
-                        <label htmlFor="quote-value">Wartość kwotowania</label>
-                        <input type="number" step="any" min="0.0001" id="quote-value" name="quote-value"/>
-                    </div>
-                    <Button variant="primary" size="sm" onClick={this.handleButtonClick}>
-                        Small button
-                    </Button>
-                </fieldset>
+                </div>
 
-                <table id="quotes-table">
+                <div>
                     <caption>Kursy {this.state.name}</caption>
-                    <thead>
-                    <tr>
-                        <td>Data kwotowania</td>
-                        <td>Wartość kwotowania</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.state.series.map((quote) =>
-                        <NewQuoteRow quoteDate={quote.quoteDate}
-                                     quoteValue={quote.quoteValue} onClickFunction={this.handleRowClick}/>
-                    )}
-                    </tbody>
-                </table>
+                    {/*Dziadostwo pojawia się na dole tabeli, gdy wrzucić to między znaczniki table*/}
+                    <table id="quotes-table" className="mt-1">
+                        <thead>
+                        <tr>
+                            <td>Data kwotowania</td>
+                            <td>Wartość kwotowania</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.state.series.map((quote) =>
+                            <QuoteRow quoteDate={quote.quoteDate}
+                                      quoteValue={quote.quoteValue} onClickFunction={this.handleRowClick}/>
+                        )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }

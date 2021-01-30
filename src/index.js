@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
@@ -16,9 +15,9 @@ ReactDOM.render(
         <Router>
             <Header/>
             <Switch>
-                <Route path="/about" component={About}/>
+                <Route path="/data" component={Data}/>
                 <Route path="/model" component={OptionsForm}/>
-                <Route exact path="/" component={Data}/>
+                <Route exact path="/" component={About}/>
                 <Route component={NotFound} />
             </Switch>
         </Router>
@@ -26,12 +25,8 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-function Home() {
-    return <h2>Home</h2>;
-}
-
 function About() {
-    return <h2>About</h2>;
+    return (<h2>O projekcie</h2>);
 }
 
 

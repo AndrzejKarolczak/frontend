@@ -9,24 +9,20 @@ export default function Header() {
         <Navbar bg="dark" expand="lg" variant="dark">
             <LinkContainer to="/">
                 <Navbar.Brand>
-                    <img src={logo} className="App-logo" alt="logo" />
-                    React-Bootstrap
+                    <img src={logo} className="App-logo" alt="logo"/>
+                    O projekcie
                 </Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <LinkContainer to="/about">
-                        <Nav.Link>Home</Nav.Link>
+                    <LinkContainer to="/data">
+                        <Nav.Link>Dane</Nav.Link>
                     </LinkContainer>
                     <LinkContainer to="/model">
                         <Nav.Link>Model</Nav.Link>
                     </LinkContainer>
                 </Nav>
-                {/*<Form inline>*/}
-                {/*    <FormControl type="text" placeholder="Search" className="mr-sm-2" />*/}
-                {/*    <Button variant="outline-success">Search</Button>*/}
-                {/*</Form>*/}
                 <Navbar.Text>
                     Wykonał Andrzej Karolczak
                 </Navbar.Text>

@@ -1,7 +1,10 @@
-table {
-    margin: auto;
-    table-layout:fixed;
-}
+/*table {*/
+/*    table-layout:fixed;*/
+/*    !*margin-top: 30px;*!*/
+/*    margin-left: 50px;*/
+/*    margin-right: 50px;*/
+/*    caption-side: top;*/
+/*}*/
 
 thead td {
     border: 1px solid black; font-weight: bolder;
@@ -22,11 +25,16 @@ caption {
     font-size: larger;
     font-weight: bold;
 }
-input, label {
-    display:block;
-}
 
 .buttonTd {
     background-color: lightgreen;
     border: 0;
+}
+
+.leftFloater {
+    float: left;
+}
+
+.cardBackground {
+    background-color: lightsalmon;
 }

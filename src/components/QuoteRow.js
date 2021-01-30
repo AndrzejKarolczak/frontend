@@ -1,29 +1,28 @@
-import React from 'react';
+import React from "react";
 
-class QuoteRow extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
+export default function QuoteRow(props) {
+    const handleOnPointerEnter = (e) => {
+        e.preventDefault();
+        document.getElementById(props.quoteDate).hidden = false;
     }
 
-    handleClick(e) {
-        //e.preventDefault();
-        if (e.target.value === undefined) alert("Nie działa");
-        let ddd = e.target.value;
-        //alert(ddd);
-        console.log(ddd);
-        //document.getElementById("quote-date").value = ;
-        //document.getElementById("quote-value").value = ;
+    const handleOnPointerLeave = (e) => {
+        e.preventDefault();
+        document.getElementById(props.quoteDate).hidden = true;
     }
 
-    render() {
-        return (
-            <tr onClick={(e) => this.handleClick(e)}>
-                <td>{this.props.rowData.quoteDate}</td>
-                <td>{this.props.rowData.quoteValue}</td>
-            </tr>
-        );
-    }
+    return (
+        <tr onPointerEnter={handleOnPointerEnter} onPointerLeave={handleOnPointerLeave}>
+            <td id="1">{props.quoteDate}</td>
+            <td id="2">{props.quoteValue}</td>
+            <td id={props.quoteDate} hidden="true" className="buttonTd">
+                <div>
+                    <input className="btn btn-danger btn-sm mr-1" type="button" name={props.quoteDate} value="Usuń"
+                           onClick={e => props.onClickFunction(e)}/>
+                    <input className="btn btn-success btn-sm" type="button" name={props.quoteDate} value="Zaznacz"
+                           onClick={e => props.onClickFunction(e)}/>
+                </div>
+            </td>
+        </tr>
+    );
 }
-
-export default QuoteRow;
